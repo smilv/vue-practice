@@ -114,3 +114,9 @@ select {
     border: 0;
     outline: none;
 }
+
+*,
+:after,
+:before {
+    box-sizing: border-box;
+}
