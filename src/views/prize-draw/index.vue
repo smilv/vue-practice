@@ -12,41 +12,67 @@
                     { id: 7, name: "20积分" },
                     { id: 8, name: "桶面" }
                 ],
-                prizeId: 1, //中奖id
-                index: 0, //当前转动到的格子
-                speed: 300, //转动间隔
+                open: true, //是否可点击抽奖
+                prizeId: 8, //中奖id
+                cell: 8, //格子个数
+                index: -1, //当前转动到的格子
                 rounds: 1, //转动的圈数
-                timer: null, //计时器
-                speedEnd: false //减速
+                speed: 300, //当前转动间隔
+                speedMin: 50, //最小转动间隔
+                speedSlow: false, //开始减速
+                quickRate: null, //递增的速率
+                quickRounds: 2, //加速的圈数
+                slowRounds: 3, //减速的圈数
+                maxRounds: 12 //最多转动的圈数(必须大于加速+减速的圈数)
             };
+        },
+        mounted() {
+            this.quickRate =
+                (this.speed - this.speedMin) / (this.quickRounds * this.cell);
         },
         methods: {
             go() {
+                if (this.open) {
+                    this.index = -1;
+                    this.rounds = 1;
+                    this.speed = 300;
+                    this.open = false;
+                    this.speedSlow = false;
+                    this.rotate();
+                }
+            },
+            rotate() {
                 this.index += 1;
-                if (this.index > 7) {
+                //格子转到最大时，圈数+1
+                if (this.index == 8) {
                     this.index = 0;
                     this.rounds++;
                 }
                 //加速过程
-                if (this.speed > 50 && this.rounds < 8) {
-                    this.speed -= Math.round(this.speed * 0.1);
+                if (this.rounds <= this.quickRounds) {
+                    this.speed -= this.quickRate;
                 }
-                //第8圈遇到中奖格子开始减速
-                if (this.rounds == 8 && this.prizeId == this.list[this.index].id) {
-                    this.speedEnd = true;
+                //遇到中奖格子开始减速
+                if (
+                    this.rounds == this.maxRounds - this.slowRounds &&
+                    this.prizeId == this.list[this.index].id
+                ) {
+                    this.speedSlow = true;
                 }
-                if (this.speedEnd) {
+                if (this.speedSlow) {
                     this.speed += Math.round(this.speed * 0.1);
                 }
-                if (this.speed > 500) {
-                    setTimeout(() => {
-                        alert(this.list[this.index].name);
-                    }, 500);
+                //转动停止
+                if (
+                    this.rounds == this.maxRounds &&
+                    this.prizeId == this.list[this.index].id
+                ) {
+                    console.log(this.list[this.index].name);
+                    this.open = true;
                     return;
                 }
-                console.log(this.speed);
-                this.timer = setTimeout(() => {
-                    this.go();
+                setTimeout(() => {
+                    this.rotate();
                 }, this.speed);
             }
         }
