@@ -13,17 +13,19 @@
                     { id: 8, name: "桶面" }
                 ],
                 open: true, //是否可点击抽奖
-                prizeId: 8, //中奖id
+                prizeId: 0, //中奖id
                 cell: 8, //格子个数
+                indexInit: 0, //初始转动的格子
                 index: -1, //当前转动到的格子
-                rounds: 1, //转动的圈数
+                rounds: 0, //转动的圈数
                 speed: 300, //当前转动间隔
                 speedMin: 50, //最小转动间隔
                 speedSlow: false, //开始减速
                 quickRate: null, //递增的速率
                 quickRounds: 2, //加速的圈数
                 slowRounds: 3, //减速的圈数
-                maxRounds: 12 //最多转动的圈数(必须大于加速+减速的圈数)
+                maxRounds: 12, //最多转动的圈数(必须大于加速+减速的圈数)
+                testPrizeId: [5, 2, 3, 8, 1, 6, 7, 4]
             };
         },
         mounted() {
@@ -33,8 +35,7 @@
         methods: {
             go() {
                 if (this.open) {
-                    this.index = -1;
-                    this.rounds = 1;
+                    this.prizeId = this.testPrizeId.shift();
                     this.speed = 300;
                     this.open = false;
                     this.speedSlow = false;
@@ -43,9 +44,10 @@
             },
             rotate() {
                 this.index += 1;
-                //格子转到最大时，圈数+1
                 if (this.index == 8) {
                     this.index = 0;
+                }
+                if (this.index == this.indexInit) {
                     this.rounds++;
                 }
                 //加速过程
@@ -62,13 +64,16 @@
                 if (this.speedSlow) {
                     this.speed += Math.round(this.speed * 0.1);
                 }
+
                 //转动停止
                 if (
                     this.rounds == this.maxRounds &&
                     this.prizeId == this.list[this.index].id
                 ) {
                     console.log(this.list[this.index].name);
+                    this.indexInit = this.index == 7 ? 0 : this.index + 1;
                     this.open = true;
+                    this.rounds = 0;
                     return;
                 }
                 setTimeout(() => {
