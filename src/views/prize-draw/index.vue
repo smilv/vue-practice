@@ -24,8 +24,7 @@
                 quickRate: null, //递增的速率
                 quickRounds: 2, //加速的圈数
                 slowRounds: 3, //减速的圈数
-                maxRounds: 12, //最多转动的圈数(必须大于加速+减速的圈数)
-                testPrizeId: [5, 2, 3, 8, 1, 6, 7, 4]
+                maxRounds: 12 //最多转动的圈数(必须大于加速+减速的圈数)
             };
         },
         mounted() {
@@ -35,7 +34,7 @@
         methods: {
             go() {
                 if (this.open) {
-                    this.prizeId = this.testPrizeId.shift();
+                    this.prizeId = Math.floor(Math.random() * 8 + 1);
                     this.speed = 300;
                     this.open = false;
                     this.speedSlow = false;
