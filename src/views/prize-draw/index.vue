@@ -1,4 +1,7 @@
 <script>
+    /**
+     * bin 2019/11/25
+     */
     export default {
         data() {
             return {
