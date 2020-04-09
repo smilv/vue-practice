@@ -45,7 +45,8 @@ p {
 
 body,
 html {
-    background: #f6f6f6;
+    background: #272b38;
+    height: 100%;
     cursor: default;
     word-break: break-all;
 }

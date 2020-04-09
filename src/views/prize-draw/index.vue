@@ -93,12 +93,6 @@
         </div>
     </div>
 </template>
-<style>
-    body,
-    html {
-        background: #d8d8d8;
-    }
-</style>
 <style scoped>
     .main {
         width: 640px;
