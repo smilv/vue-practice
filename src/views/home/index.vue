@@ -35,6 +35,12 @@
         >{{item.meta.name}}</a>
     </div>
 </template>
+<style>
+    body,
+    html {
+        background: #272b38;
+    }
+</style>
 <style scoped>
     .wrapper {
         padding: 20px;
