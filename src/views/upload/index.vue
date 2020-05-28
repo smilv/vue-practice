@@ -3,7 +3,7 @@
  * @Autor: bin
  * @Date: 2020-02-26 15:16:43
  * @LastEditors: bin
- * @LastEditTime: 2020-05-28 15:37:49
+ * @LastEditTime: 2020-05-28 17:42:08
 --> 
 <script>
     import axios from "@/axios";
@@ -21,9 +21,10 @@
                     return;
                 }
                 const formData = new FormData();
-                formData.append("imgFile", file, file.name);
+                formData.append("imgFile", file);
                 axios.uploadImg(formData).then(response => {
                     if (response.code == 200) {
+                        // base64 预览
                         // let reader = new FileReader();
                         // reader.readAsDataURL(file);
                         // reader.onload = e => {

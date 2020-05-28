@@ -22,6 +22,6 @@ instance.interceptors.response.use(
 export default {
     //上传图片
     uploadImg: data => {
-        return instance.post("//172.16.20.98:3000/upload", data);
+        return instance.post("//localhost:3000/upload", data);
     }
 };
