@@ -1,7 +1,11 @@
+<!--
+ * @Description: 上传图片
+ * @Autor: bin
+ * @Date: 2020-02-26 15:16:43
+ * @LastEditors: bin
+ * @LastEditTime: 2020-05-28 15:37:49
+--> 
 <script>
-    /**
-     * bin 2020/2/26
-     */
     import axios from "@/axios";
     export default {
         data() {
@@ -20,11 +24,12 @@
                 formData.append("imgFile", file, file.name);
                 axios.uploadImg(formData).then(response => {
                     if (response.code == 200) {
-                        let reader = new FileReader();
-                        reader.readAsDataURL(file);
-                        reader.onload = e => {
-                            this.imgs.push(e.target.result);
-                        };
+                        // let reader = new FileReader();
+                        // reader.readAsDataURL(file);
+                        // reader.onload = e => {
+                        //     this.imgs.push(e.target.result);
+                        // };
+                        this.imgs.push(this.tuPath + response.data);
                     }
                 });
             }
